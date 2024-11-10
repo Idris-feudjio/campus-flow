@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "campus-flow"
+version = "0.1.0"
+description = ""
+authors = ["Idris Feudjio <idris.bogning@yata-experts.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
