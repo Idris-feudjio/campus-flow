@@ -1,7 +1,7 @@
 #from views.share.components.custom_app_bar import *
 from flet import *
-from controllers.dummy_data import *
-from views.share.constants.size import *
+from controllers.dummy_data import * 
+from share.constants.size import *
 
 is_drawer = True
 def shrink_drawer(e):
@@ -64,7 +64,7 @@ page_2 = Row(alignment=MainAxisAlignment.END,
                      controls=[ 
                          custom_app_bar,
                          Container( height=10 ),
-                        Text(f"Hi Welcome {teacher.first_name}",text_align=TextAlign.LEFT,style=TextStyle(size=fontsize25,weight=FontWeight.BOLD))
+                        Text(f"Hi Welcome {anounce1.channel.class_name}",text_align=TextAlign.LEFT,style=TextStyle(size=fontsize25,weight=FontWeight.BOLD))
                      ]
                  ),
                  animate_scale= animation.Animation(400,curve="decelerate")
