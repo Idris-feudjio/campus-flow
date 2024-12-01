@@ -38,6 +38,7 @@ class Student (User):
                        first_name=json_s["first_name"],
                        last_name=json_s["last_name"],
                        user_name=json_s["user_name"],
+                       email=json_s["email"],
                        password=json_s["password"],
                        channel=json_s["channel"],
                        )
@@ -45,6 +46,16 @@ class Student (User):
 class Teacher(User):
     def __init__(self, first_name, last_name, email, user_name, password, channel: Channel = None, id=None):
         super().__init__(first_name, last_name, email, user_name, password, channel, id)
+        
+        def student_from_json(self,json_s):
+            return Teacher(id=json_s["id"],
+                       first_name=json_s["first_name"],
+                       last_name=json_s["last_name"],
+                       user_name=json_s["user_name"],
+                       email=json_s["email"],
+                       password=json_s["password"],
+                       channel=json_s["channel"],
+                       )
 
 class Anounce(Serializer): 
     def __init__(self,date_anounce,subjet,channel:Channel,anounce_type,description,teacher:Teacher ) -> None:

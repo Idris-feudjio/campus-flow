@@ -3,25 +3,7 @@ from views.home.home_view import *
 from share.route.routes import * 
 from share.constants.colors import *
 from share.constants.size import *
-
-
-#def main(page: Page):
-#    page.title = "CampusNews" 
-#    page.window.width = 360
-#    page.window.height = 720
-#    page.horizontal_alignment = CrossAxisAlignment.CENTER
-#    page.scroll = ScrollMode.ADAPTIVE
-#    page.bgcolor=colors.BLUE
-#    # create app control and add it to the page
-#    
-#    
-#    firebase = pyrebase.initialize_app(firebaseConfig)
-#    auth = firebase.auth()
-#    page.add(HomeView())
-#
-#
-#app(target=main)
-
+ 
 def main(page: Page):
     page.title = "CampusNews" 
     page.window.width = 360

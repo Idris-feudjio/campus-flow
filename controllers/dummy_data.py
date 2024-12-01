@@ -3,7 +3,7 @@ from models.user import *
 channelGL1 = Channel(101,"Genie Logiciel C4","GL")
 channelGL2 = Channel(102,"Genie Civil et Mécanique","GLM")
 
-teacher1 = Teacher(first_name="Manga",last_name="Joel",user_name="manga",password="manga")
+teacher1 = Teacher(first_name="Manga",last_name="Joel",email='manga@gmail.com',user_name="manga",password="manga")
 #anounce1 = teacher.create_anouncemnt(subjet="Emplois de temps Hebdomadaire",channel=channelGL1)
 #anounce2 = teacher.create_anouncemnt(subjet="Programme pour les CC",channel=channelGL2)
 #anounces = [anounce1, anounce2]
@@ -25,9 +25,10 @@ anounce2 = Anounce(
                   )
 anounces = [anounce1, anounce2]
 
-student1 = Student(id="87669",first_name="Idris",last_name="Feudjio",user_name="eva",password="baby",channel=channelGL1.to_json())
+student1 = Student(id="87669",first_name="Idris",last_name="Feudjio",email="idris@gmail.com",user_name="eva",password="baby",channel=channelGL1.to_json())
 
-student2 = Student(id="87663",first_name="Idris",last_name="Feudjio",user_name="eva",password="baby",channel=channelGL2.to_json())
+student2 = Student(id="87663",first_name="Idris",last_name="Feudjio",user_name="eva",email='eva@gmail.com'
+                   ,password="baby",channel=channelGL2.to_json())
 
 json_string = student1.to_json()
 dict_i = student1.from_json(json_string)

@@ -37,10 +37,13 @@ class PyrebaseWrapper:
         self.page.client_storage.remove("firebase_id")
 
     def register_user(self, name, username, email, password):
+        print(f'name : {name} username : {username} email : {email} password : {password} ')
+        #name : idris username : feudjio email : idris@gmail.com password : 123456 
+     
         self.auth.create_user_with_email_and_password(email, password)
-        self.sign_in(email, password)
-        self.db.child("users").child(self.uuid).update(data={"name": name, "username": username}, token=self.idToken)
-
+       #self.sign_in(email, password)
+       #self.db.child("users").child(self.uuid).update(data={"name": name, "username": username}, token=self.idToken)
+       
     def sign_in(self, email, password):
         user = self.auth.sign_in_with_email_and_password(email, password)
         if user:
