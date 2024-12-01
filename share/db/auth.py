@@ -1,5 +1,5 @@
 from flet import * 
-from db_config import firebaseConfig,secret_key
+from share.db.db_config import firebaseConfig, secret_key
 from flet.security import encrypt, decrypt
 import pyrebase
 

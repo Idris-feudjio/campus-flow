@@ -1,5 +1,8 @@
- 
 from flet import *
+
+
+default_width_app = 360
+default_hright_app = 720
 
 #FONTSIZE
 fontsize5 = 5
@@ -20,6 +23,3 @@ padding25 = 25
 padding30= 30
 padding35= 35
 padding50= 50
-
-
-

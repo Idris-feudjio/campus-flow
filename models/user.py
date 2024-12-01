@@ -18,20 +18,20 @@ class Channel (Serializer):
    
 
 class User(Serializer) :
-    def __init__(self,first_name,last_name,user_name,password,channel :Channel= None,id=None) :
+    def __init__(self,first_name,last_name,email,user_name,password,channel :Channel= None,id=None) :
         self.id =id
         self.first_name = first_name
         self.last_name =last_name
-        self.password= password
         self.user_name = user_name
         self.channel = channel
+        self.email = email
+        self.password= password
         super().__init__()
-
-
+    
+    
 class Student (User):
-    annonce_number = 0
-    def __init__(self, first_name, last_name, user_name, password, channel:Channel,id =None):
-        super().__init__(first_name, last_name, user_name, password, channel,id)
+    def __init__(self, first_name, last_name, email, user_name, password, channel: Channel = None, id=None):
+        super().__init__(first_name, last_name, email, user_name, password, channel, id)
         
     def student_from_json(self,json_s):
         return Student(id=json_s["id"],
@@ -43,8 +43,8 @@ class Student (User):
                        )
           
 class Teacher(User):
-    def __init__(self, first_name, last_name, user_name, password, channel=None):
-        super().__init__(first_name, last_name, user_name, password, channel)  
+    def __init__(self, first_name, last_name, email, user_name, password, channel: Channel = None, id=None):
+        super().__init__(first_name, last_name, email, user_name, password, channel, id)
 
 class Anounce(Serializer): 
     def __init__(self,date_anounce,subjet,channel:Channel,anounce_type,description,teacher:Teacher ) -> None:
