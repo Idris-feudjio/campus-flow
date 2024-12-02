@@ -8,7 +8,7 @@ def RegisterView(page:Page, myPyrebase:PyrebaseWrapper):
         try:
             myPyrebase.register_user(name.value, username.value, email_input.value, password_input.value)
             name.value, username.value, email_input.value, password_input.value = '', '', '', ''
-            page.go('/')
+            page.go('/login')
         except:
             handle_sign_in_error()
 
@@ -34,7 +34,7 @@ def RegisterView(page:Page, myPyrebase:PyrebaseWrapper):
     back_to_login_button = Row(
         alignment=MainAxisAlignment.END,
         controls=[
-            TextButton("I have account.", icon=icons.UNDO, icon_color=colors.RED, on_click=lambda _:page.go('/')),
+            TextButton("I have account.", icon=icons.UNDO, icon_color=colors.RED, on_click=lambda _:page.go('/login')),
         ]
     )
     sign_up_button = ElevatedButton(

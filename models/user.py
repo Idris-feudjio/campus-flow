@@ -16,22 +16,22 @@ class Channel (Serializer):
                        short_name=json_s["short_name"], 
                        )
    
-
 class User(Serializer) :
-    def __init__(self,first_name,last_name,email,user_name,password,channel :Channel= None,id=None) :
+    def __init__(self,first_name,last_name,email,user_name,password,channel :Channel= None,id=None,avatar=None) :
         self.id =id
         self.first_name = first_name
         self.last_name =last_name
         self.user_name = user_name
         self.channel = channel
         self.email = email
+        self.avatar = avatar
         self.password= password
         super().__init__()
     
     
 class Student (User):
-    def __init__(self, first_name, last_name, email, user_name, password, channel: Channel = None, id=None):
-        super().__init__(first_name, last_name, email, user_name, password, channel, id)
+    def __init__(self, first_name, last_name, email, user_name, password, channel: Channel = None, id=None, avatar=None):
+        super().__init__(first_name, last_name, email, user_name, password, channel, id, avatar)
         
     def student_from_json(self,json_s):
         return Student(id=json_s["id"],
@@ -39,20 +39,22 @@ class Student (User):
                        last_name=json_s["last_name"],
                        user_name=json_s["user_name"],
                        email=json_s["email"],
+                       avatar=json_s["avatar"],
                        password=json_s["password"],
                        channel=json_s["channel"],
                        )
           
 class Teacher(User):
-    def __init__(self, first_name, last_name, email, user_name, password, channel: Channel = None, id=None):
-        super().__init__(first_name, last_name, email, user_name, password, channel, id)
+    def __init__(self, first_name, last_name, email, user_name, password, channel: Channel = None, id=None, avatar=None):
+        super().__init__(first_name, last_name, email, user_name, password, channel, id, avatar)
         
-        def student_from_json(self,json_s):
+        def teacher_from_json(self,json_s):
             return Teacher(id=json_s["id"],
                        first_name=json_s["first_name"],
                        last_name=json_s["last_name"],
                        user_name=json_s["user_name"],
                        email=json_s["email"],
+                       avatar=json_s["avatar"],
                        password=json_s["password"],
                        channel=json_s["channel"],
                        )

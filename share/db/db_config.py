@@ -10,7 +10,7 @@ firebaseConfig = {
   'messagingSenderId': "997110923754",
   'appId': "1:997110923754:web:425bff02b636633aacf293",
   'measurementId': "G-P524HYQKL0",
-  'databaseURL':''
+  'databaseURL':'https://campus-flow-7bdf8-default-rtdb.firebaseio.com'
 }
 
 secret_key = "campusFlow"

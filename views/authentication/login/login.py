@@ -1,15 +1,14 @@
 from flet import *
 from share.db.auth import *
 
-def IndexView(page:Page, myPyrebase:PyrebaseWrapper):
-    title = "Flet + Pyrebase"
 
-    def on_load():
+def LoginForm(page:Page, myPyrebase:PyrebaseWrapper):
+    title = "Login" 
+
+    def on_loaded():
         if myPyrebase.check_token():
-            page.go('/dashboard')
-        else:
-            page.go('/auth')
-
+            page.go('/dashboard') 
+              
     def handle_sign_in_error():
         page.snack_bar = SnackBar(
             content=Text("Incorrect Info. Please Try Again.", color=colors.WHITE),
@@ -20,10 +19,13 @@ def IndexView(page:Page, myPyrebase:PyrebaseWrapper):
 
     def handle_sign_in(e):
         try:
-            myPyrebase.sign_in(email.value, password.value)
-            password.value = ""
+            myPyrebase.sign_in(email_input.value, password_input.value)
+            print(f'''
+                  -----Login : {email_input.value}
+                  -----Password : {password_input.value}''')
+            password_input.value = ""
             page.go("/dashboard")
-        except:
+        except: 
             handle_sign_in_error()
             page.update()
 
@@ -36,42 +38,76 @@ def IndexView(page:Page, myPyrebase:PyrebaseWrapper):
     def handle_google_hover(e):
         pass
 
-    banner = Image(src='banner.png', width=250, border_radius=5, fit=ImageFit.COVER)
-    welcome_text = Text("Welcome", size=26, bottom=10, right=10, color=colors.WHITE70)
-    email = TextField(label="Email", width=250)
-    password = TextField(label="Password", width=250, password=True)
+    banner = CircleAvatar(
+        radius=55,
+        content=Image(src='banner.png',border_radius=5, fit=ImageFit.COVER),
+    )
 
-    sign_in_button = TextButton("Sign In", on_click=handle_sign_in)
-    register_button = TextButton("Register", on_click=handle_register)
-
+    email_input = TextField(label="Email", prefix_icon=icons.EMAIL,border_radius=border_radius.all(5),)
+    password_input = TextField(label="Password",password=True, can_reveal_password=True,prefix_icon=icons.LOCK,
+        border_radius=border_radius.all(5)) 
+    
+    sign_in_button = ElevatedButton(
+        text="Login",
+        icon=icons.LOGIN,
+        bgcolor=colors.BLUE_600,
+        color=colors.WHITE,
+        style=ButtonStyle(
+            shape=RoundedRectangleBorder(radius=5),
+            padding=padding.symmetric(vertical=15, horizontal=24),
+        ),
+        on_click=handle_sign_in,
+    )
+    go_to_register_button = Row(
+        alignment=MainAxisAlignment.END,
+        controls=[
+            TextButton(
+                text="No account yet ?",
+                style=ButtonStyle(
+                    shape=RoundedRectangleBorder(radius=5),
+                    padding=padding.symmetric(vertical=12, horizontal=24),
+                ),
+                on_click=handle_register
+                
+            ),
+        ]
+    )
+    
     google_button = Container(Image(src="btn_google_dark.png", width=250), on_click=handle_google, on_hover=handle_google_hover)
-    show = ""
-    myPage = Column(
-        [
-            Container(
-                Stack(
+ 
+    myPage = Container(
+            content=Column(
                 [
                     banner,
-                    welcome_text
-                    ]
-            ), alignment=alignment.center
+                    Text(
+                        "Bienvenue",
+                        size=28,
+                        weight=FontWeight.BOLD,
+                        text_align=TextAlign.LEFT,
+                    ),
+                    Text(
+                        "Veuillez vous connecter pour continuer.",
+                        size=16, 
+                        weight=FontWeight.BOLD,
+                        color=colors.ON_SURFACE_VARIANT,
+                        text_align=TextAlign.LEFT,
+                    ),
+                    email_input,
+                    password_input,
+                    Container(height=10),
+                    sign_in_button,
+                    Container(height=10),
+                    go_to_register_button,
+                ],
+                
+                horizontal_alignment = CrossAxisAlignment.STRETCH,
+                spacing=20,
             ),
-            Row(
-                [email],
-                alignment=MainAxisAlignment.CENTER
-                ),
-            Row(
-                [password],
-                alignment=MainAxisAlignment.CENTER
-                ),
-            Row(
-                [register_button, sign_in_button],
-            alignment=MainAxisAlignment.CENTER),
-        ]
-            )
+            padding=padding.all(20),   
+        )
     
     return {
         "view":myPage,
         "title": title,
-        "load": on_load
+        "load": on_loaded
         }

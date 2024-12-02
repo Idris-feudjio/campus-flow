@@ -14,14 +14,19 @@ def DashboardView(page:Page, myPyrebase:PyrebaseWrapper):
             pass
 
     def on_page_load():
-        clean_notes()
+       # clean_notes()
         username.value = "Welcome"
         if myPyrebase.check_token() == "Success":
             myPyrebase.stream_data(handle_stream)
             handle = myPyrebase.get_username()
             if handle:
                 username.value = "Welcome, " + "@" + handle
+            else:
+              print('/////////// ------------FALSE--------- ///////////////')
+            
             page.update()
+        else:
+            print('/////////// FALSE ///////////////')
      
 
     def handle_add(e):

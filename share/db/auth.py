@@ -26,6 +26,7 @@ class PyrebaseWrapper:
 
     def save_tokens(self, token, uuid, page):
         ### encrypt the token before storing to prevent other applications from stealing it.
+        print(f'----TOKEN : {token}')
         encrypted_token = encrypt(token, secret_key)
         self.page.client_storage.set("firebase_token", encrypted_token)
         self.page.client_storage.set("firebase_id", uuid)
@@ -41,9 +42,10 @@ class PyrebaseWrapper:
         #name : idris username : feudjio email : idris@gmail.com password : 123456 
      
         self.auth.create_user_with_email_and_password(email, password)
-       #self.sign_in(email, password)
-       #self.db.child("users").child(self.uuid).update(data={"name": name, "username": username}, token=self.idToken)
-       
+        self.sign_in(email, password)
+        self.db.child("users").child(self.uuid).update(data={"name": name, "username": username}, token=self.idToken)
+        print('Enregistrer avec succès')
+        
     def sign_in(self, email, password):
         user = self.auth.sign_in_with_email_and_password(email, password)
         if user:
