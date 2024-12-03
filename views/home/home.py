@@ -1,80 +1,59 @@
 from flet import *
 from share.db.auth import *
-
-def DashboardView(page:Page, myPyrebase:PyrebaseWrapper):
-    title = "My Dashboard"
-
-    username = Text("Welcome", size=16)
-
-    def handle_stream(message):
-        try:
-            build_notes()
-            page.update()
-        except:
-            pass
-
-    def on_page_load():
-       # clean_notes()
-        username.value = "Welcome"
-        if myPyrebase.check_token() == "Success":
-            myPyrebase.stream_data(handle_stream)
-            handle = myPyrebase.get_username()
-            if handle:
-                username.value = "Welcome, " + "@" + handle
-            else:
-              print('/////////// ------------FALSE--------- ///////////////')
-            
-            page.update()
-        else:
-            print('/////////// FALSE ///////////////')
-     
-
-    def handle_add(e):
-        myPyrebase.add_note({"note": note_field.value})
-        note_field.value = ""
-        page.update()
-        
-    def handle_logout(*e):
-        clean_notes()
-        username.value = ""
-        myPyrebase.kill_all_streams()
-        myPyrebase.sign_out()
-        page.go("/")
-
+class HomeView:
+    def __init__(self,page:Page, myPyrebase:PyrebaseWrapper) -> None: 
+        self.page = page 
+        self.myPyrebase=myPyrebase
+        self.page.bgcolor=colors.WHITE  
+        self.page.bgcolor=colors.WHITE 
+        self.username = Text("Welcome", size=16) 
+        self.on_page_load
     
-    note_field = TextField(label="Enter note here", width=250)
-    all_notes = []
+    def on_page_load(self):
+           # clean_notes()
+        self. username.value = "Welcome",
+        if self.myPyrebase.check_token() == "Success":
+            self.myPyrebase.stream_data(self.handle_stream)
+            handle = self.myPyrebase.get_username()
+            if handle:
+                self.username.value = "Welcome, " + "@" + handle  
+                self.page.update()
+                
+    def handle_stream(self,message):
+       try:
+           self.build_notes()
+           self.page.update()
+       except:
+           pass
+    def handle_add(self,e):
+           #self. myPyrebase.add_note({"note": note_field.value})
+           #note_field.value = ""
+            self.page.update()
 
-    def build_notes():
-        all_notes.clear()
-        data = myPyrebase.get_notes()
-        keys = data['notes'].keys()
-        for key in keys:
-            note_text = data['notes'][key]['note']
-           # note = Note(page, note_text, key, myPyrebase)
-            #all_notes.append(note)
+    def handle_logout(self,*e):
+            #clean_notes()
+            self.username.value = ""
+            self.myPyrebase.kill_all_streams()
+            self.myPyrebase.sign_out()
+            self.page.go("/login")
 
-    def clean_notes():
-        all_notes.clear()
-        all_notes.append(Text(" "))
-        page.update()
+    def DashboardView(self):
+        title = "My Dashboard"  
+        note_field = TextField(label="Enter note here", width=250)
+        all_notes = []
+        add_note_button = TextButton("Add Note", on_click=self.handle_add)
+        logout_button = TextButton("Logout", on_click=self.handle_logout, style=ButtonStyle(colors.RED))
+        myPage = Column([
+                Row([Text("Dashboard", size=20)], alignment=MainAxisAlignment.CENTER),
+                Row([self.username], alignment=MainAxisAlignment.CENTER),
+                Column(all_notes, alignment="center"),
+                Row([note_field], alignment=MainAxisAlignment.CENTER),
+                Row([add_note_button], alignment=MainAxisAlignment.CENTER),
+                Row([logout_button], alignment=MainAxisAlignment.CENTER)
+                ])
 
-
-    add_note_button = TextButton("Add Note", on_click=handle_add)
-    logout_button = TextButton("Logout", on_click=handle_logout, style=ButtonStyle(colors.RED))
-
-
-    myPage = Column([
-            Row([Text("Dashboard", size=20)], alignment=MainAxisAlignment.CENTER),
-            Row([username], alignment=MainAxisAlignment.CENTER),
-            Column(all_notes, alignment="center"),
-            Row([note_field], alignment=MainAxisAlignment.CENTER),
-            Row([add_note_button], alignment=MainAxisAlignment.CENTER),
-            Row([logout_button], alignment=MainAxisAlignment.CENTER)
-            ])
-            
-    return {
-        "view":myPage,
-        "title": title,
-        "load": on_page_load
-        }
+        return {
+            "view":myPage,
+            "title": title,
+            "load": self.on_page_load
+            }

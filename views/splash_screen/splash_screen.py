@@ -10,9 +10,12 @@ class SplashScreen:
         
     def on_load(self):  
             if self.myPyrebase.check_token():
-                self.page.go('/dashboard')   
+                self.page.go('/dashboard')    
+                print('------GO TO DASHBOARD-----------')
             else:
+                print('------GO TO LOGIN-----------')
                 self.page.go('/login')  
+                
     def IndexView(self): 
         title = "SplashScreen"   
         banner = CircleAvatar(

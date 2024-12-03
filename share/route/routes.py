@@ -13,11 +13,13 @@ class Router:
         self.page = page
         splash = SplashScreen(page=page,myPyrebase=myPyrebase) 
         
+        dasboard = HomeView(page=page,myPyrebase=myPyrebase) 
+        
         self.routes = {
             "/": splash.IndexView(),
             "/login": LoginForm(page, myPyrebase),
             "/register": RegisterView(page, myPyrebase),
-            "/dashboard": DashboardView(page, myPyrebase),
+            "/dashboard": dasboard.DashboardView(),
         }
         self.body = Container(content=self.routes['/']["view"])
 
