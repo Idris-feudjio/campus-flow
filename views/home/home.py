@@ -36,9 +36,11 @@ class HomeView:
             self.myPyrebase.kill_all_streams()
             self.myPyrebase.sign_out()
             self.page.go("/login")
-
-    def DashboardView(self):
-        title = "My Dashboard"  
+             
+    def build_page(self):
+        def open_pagelet_end_drawer(e):
+            pagelet.drawer.open = True
+            pagelet.drawer.update()
         note_field = TextField(label="Enter note here", width=250)
         all_notes = []
         add_note_button = TextButton("Add Note", on_click=self.handle_add)
@@ -51,6 +53,60 @@ class HomeView:
                 Row([add_note_button], alignment=MainAxisAlignment.CENTER),
                 Row([logout_button], alignment=MainAxisAlignment.CENTER)
                 ])
+        pagelet = Pagelet(
+        appbar=AppBar(
+            leading=IconButton(icons.MENU_ROUNDED,on_click=open_pagelet_end_drawer),
+            leading_width=40,
+            title=Text("AppBar Title"),
+            center_title=False,
+            bgcolor=colors.SURFACE_VARIANT,
+            actions=[
+                IconButton(icons.WB_SUNNY_OUTLINED),
+                IconButton(icons.FILTER_3),
+                PopupMenuButton(
+                    items=[
+                        PopupMenuItem(text="Item 1"),
+                        PopupMenuItem(),  # divider
+                        PopupMenuItem(
+                            text="Checked item",
+                            checked=False,
+                        ),
+                    ]
+                ),
+            ],
+        ),
+         drawer=NavigationDrawer(
+            controls=[
+                NavigationDrawerDestination(
+                    icon=icons.HOME, label="Accueil",
+                    icon_content=Badge(content=Icon(icons.HOME)),
+                ),
+                NavigationDrawerDestination(
+                    icon=icons.NOTIFICATIONS, label="Notification",
+                    icon_content=Badge(content=Icon(icons.NOTIFICATIONS), text="5"),
+                ),
+                NavigationDrawerDestination(
+                    icon=icons.NOTIFICATIONS, label="Compte",
+                    icon_content=Badge(content=Icon(icons.NOTIFICATIONS), text="5"),
+                ),
+            ],
+        ),
+        floating_action_button=FloatingActionButton(
+            "Open", on_click=open_pagelet_end_drawer
+        ),
+        height=720,
+        
+        content=Container(height=300,bgcolor=colors.RED,content=myPage),
+    )
+        return pagelet
+    
+    def DashboardView(self):
+        title = "My Dashboard"  
+        note_field = TextField(label="Enter note here", width=250)
+        all_notes = []
+        add_note_button = TextButton("Add Note", on_click=self.handle_add)
+        logout_button = TextButton("Logout", on_click=self.handle_logout, style=ButtonStyle(colors.RED))
+        myPage = self.build_page()
 
         return {
             "view":myPage,
