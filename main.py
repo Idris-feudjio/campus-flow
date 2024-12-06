@@ -7,7 +7,6 @@ from share.constants.size import *
 def main(page: Page):
     page.title = "CampusNews" 
     page.window.width = 360
-    page.window.height = 650
     page.horizontal_alignment = CrossAxisAlignment.CENTER
     page.scroll = ScrollMode.ADAPTIVE
     page.bgcolor=colors.WHITE
@@ -19,8 +18,7 @@ def main(page: Page):
     page.window_title_bar_buttons_hidden = False
     #page.bgcolor = colors.TRANSPARENT
     #page.window_bgcolor = colors.TRANSPARENT
-    
-    
+
     print(teacher1.to_json())
     
     myPyrebase = PyrebaseWrapper(page)

@@ -4,8 +4,10 @@ from share.db.auth import *
 
 def LoginForm(page:Page, myPyrebase:PyrebaseWrapper):
     title = "Login" 
+    page.navigation_bar = None
 
     def on_loaded():
+        page.navigation_bar = None
         if myPyrebase.check_token():
             page.go('/dashboard') 
               

@@ -5,14 +5,15 @@ class SplashScreen:
     def __init__(self,page:Page, myPyrebase:PyrebaseWrapper) -> None:
         self.page=page
         self.myPyrebase=myPyrebase
-        self.page.bgcolor=colors.BLUE_200 
+        self.page.bgcolor=colors.BLUE_200  
         self.on_load()
         
     def on_load(self):  
-            if self.myPyrebase.check_token():
+        self.page.navigation_bar = None
+        if self.myPyrebase.check_token():
                 self.page.go('/dashboard')    
                 print('------GO TO DASHBOARD-----------')
-            else:
+        else:
                 print('------GO TO LOGIN-----------')
                 self.page.go('/login')  
                 

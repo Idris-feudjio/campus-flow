@@ -3,6 +3,9 @@ from share.db.auth import *
 
 def RegisterView(page:Page, myPyrebase:PyrebaseWrapper):
     title = "Register"
+    page.navigation_bar = None
+    def on_load():  
+        page.navigation_bar = None 
 
     def handle_sign_up(e):
         try:
@@ -77,5 +80,6 @@ def RegisterView(page:Page, myPyrebase:PyrebaseWrapper):
     
     return {
         "view":myPage,
+        "load":on_load,
         "title": title
         }
