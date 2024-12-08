@@ -1,5 +1,6 @@
 from flet import *
 from share.db.auth import *
+from views.notifications.notification_view import NotificationView
 class HomeView:
     def __init__(self,page:Page, myPyrebase:PyrebaseWrapper) -> None: 
         self.page = page 
@@ -8,23 +9,23 @@ class HomeView:
         self.page.bgcolor=colors.WHITE 
         self.username = Text("Welcome", size=16) 
         self.index_selected = 0
-        self.pages = [Text(value="Accueil", size=24, weight=FontWeight.BOLD),Text(value="Notification", size=24, weight=FontWeight.BOLD),Text(value="Compte", size=24, weight=FontWeight.BOLD)]
+        self.pages = [Text(value="Accueil", size=24, weight=FontWeight.BOLD),NotificationView(self.page,myPyrebase=myPyrebase).on_load(),Text(value="Compte", size=24, weight=FontWeight.BOLD)]
         self.on_page_load
-        self.current_page = self.pages[0] 
+        self.current_page = Text(value="Accueil", size=24, weight=FontWeight.BOLD)
     
     def on_page_load(self):
            # clean_notes()
         self.page.navigation_bar = NavigationBar(
         on_change=self.on_nav_change,
         selected_index=0,
-            destinations=[
-                NavigationBarDestination(icon=icons.EXPLORE, label="Explore"),
-                NavigationBarDestination(icon=icons.COMMUTE, label="Commute"),
-                NavigationBarDestination(
-                    icon=icons.BOOKMARK_BORDER,
-                    selected_icon=icons.BOOKMARK,
-                    label="Explore"
-                ),
+            destinations=[ 
+            NavigationBarDestination(icon=icons.HOME, label="Accueil"),
+                
+            NavigationBarDestination(
+                icon_content=Badge(content=Icon(icons.MAIL), text="5"),
+                label="Notification",
+            ),
+             NavigationBarDestination(icon=icons.SETTINGS_OUTLINED, label="Settings"), 
             ]
         )
         self. username.value = "Welcome",
@@ -71,13 +72,9 @@ class HomeView:
     #           ])
     def on_nav_change(self,e):
         selected_index = self.page.navigation_bar.selected_index
-        if selected_index == 0:
-            self.current_page = self.pages[0]
-        elif selected_index == 1:
-            self.current_page = self.pages[1]
-        elif selected_index == 2:
-           self.current_page = self.pages[2]
-        self.page.update()
+        self.current_page.value = self.pages[selected_index].value
+        self.page.update() 
+          
     def DashboardView(self):
         title = "My Dashboard"  
         note_field = TextField(label="Enter note here", width=250)
