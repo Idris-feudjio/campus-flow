@@ -1,5 +1,0 @@
-primary_color = ""
-secondary_color = ""
-acent_color = ""
-black_color = ""
-white_color = ""
