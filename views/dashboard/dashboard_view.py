@@ -1,18 +1,23 @@
 from flet import *
 from share.db.auth import *
+from views.home.home_view import HomeView
+from views.settings.settings_view import SettingsView
 from views.notifications.notification_view import NotificationView
-class HomeView:
+class DashBoardView:
     def __init__(self,page:Page, myPyrebase:PyrebaseWrapper) -> None: 
         self.page = page 
         self.myPyrebase=myPyrebase
         self.page.bgcolor=colors.WHITE  
-        self.page.bgcolor=colors.WHITE 
         self.username = Text("Welcome", size=16) 
-        self.index_selected = 0
-        self.pages = [Text(value="Accueil", size=24, weight=FontWeight.BOLD),NotificationView(self.page,myPyrebase=myPyrebase).on_load(),Text(value="Compte", size=24, weight=FontWeight.BOLD)]
+        self.index_selected = 0 
+        home = HomeView(self.page,myPyrebase=myPyrebase)
+        notification = NotificationView(self.page,myPyrebase=myPyrebase) 
+        settings = SettingsView(self.page,myPyrebase=myPyrebase)
+        #self.pages = [Text("IDRIS"),Text("FEUDJIO"),Text("BOGNING"),]
+        self.pages = [home.on_load(),notification.on_load(),settings.on_load()]
+        self.current_page = home.on_load()
         self.on_page_load
-        self.current_page = Text(value="Accueil", size=24, weight=FontWeight.BOLD)
-    
+        
     def on_page_load(self):
            # clean_notes()
         self.page.navigation_bar = NavigationBar(
@@ -20,10 +25,9 @@ class HomeView:
         selected_index=0,
             destinations=[ 
             NavigationBarDestination(icon=icons.HOME, label="Accueil"),
-                
             NavigationBarDestination(
                 icon_content=Badge(content=Icon(icons.MAIL), text="5"),
-                label="Notification",
+                label="Notification"
             ),
              NavigationBarDestination(icon=icons.SETTINGS_OUTLINED, label="Settings"), 
             ]
@@ -72,7 +76,9 @@ class HomeView:
     #           ])
     def on_nav_change(self,e):
         selected_index = self.page.navigation_bar.selected_index
-        self.current_page.value = self.pages[selected_index].value
+        self.current_page.content = Container(content=self.pages[selected_index].content)
+        print(self.current_page.content)
+        
         self.page.update() 
           
     def DashboardView(self):
@@ -87,7 +93,7 @@ class HomeView:
         ])
 
         return {
-            "view":myPage,
-            "title": title,
-            "load": self.on_page_load
-            }
+       "view":myPage,
+       "title": title,
+       "load": self.on_page_load
+       }

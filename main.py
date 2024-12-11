@@ -1,4 +1,4 @@
-from flet import  *
+from flet import  *  
 from views.home.home_view import *   
 from share.route.routes import * 
 from share.constants.colors import *
@@ -19,10 +19,13 @@ def main(page: Page):
     #page.bgcolor = colors.TRANSPARENT
     #page.window_bgcolor = colors.TRANSPARENT
 
-    print(teacher1.to_json())
+    #print(teacher1.to_json())
     
     myPyrebase = PyrebaseWrapper(page)
     myRouter = Router(page, myPyrebase)
+    
+    
+    home = DashBoardView(page=page,myPyrebase=myPyrebase).DashboardView()
 
     page.on_route_change = myRouter.route_change
 

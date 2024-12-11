@@ -4,7 +4,7 @@ from views.splash_screen.splash_screen import *
 from views.authentication.register.register import *
 
 from views.authentication.login.login import *
-from views.home.home import *
+from views.dashboard.dashboard_view import *
 
 
 class Router:
@@ -13,7 +13,7 @@ class Router:
         self.page = page
         splash = SplashScreen(page=page,myPyrebase=myPyrebase) 
         
-        dasboard = HomeView(page=page,myPyrebase=myPyrebase) 
+        dasboard = DashBoardView(page=page,myPyrebase=myPyrebase) 
         
         self.routes = {
             "/": splash.IndexView(),
