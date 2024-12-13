@@ -4,6 +4,7 @@ from views.home.home_view import HomeView
 from views.settings.settings_view import SettingsView
 from views.notifications.notification_view import NotificationView
 class DashBoardView:
+    routeName = "/dashboard"
     def __init__(self,page:Page, myPyrebase:PyrebaseWrapper) -> None: 
         self.page = page 
         self.myPyrebase=myPyrebase
@@ -12,11 +13,10 @@ class DashBoardView:
         self.index_selected = 0 
         home = HomeView(self.page,myPyrebase=myPyrebase)
         notification = NotificationView(self.page,myPyrebase=myPyrebase) 
-        settings = SettingsView(self.page,myPyrebase=myPyrebase)
-        #self.pages = [Text("IDRIS"),Text("FEUDJIO"),Text("BOGNING"),]
-        self.pages = [home.on_load(),notification.on_load(),settings.on_load()]
-        self.current_page = home.on_load()
-        self.on_page_load
+        settings = SettingsView(self.page,myPyrebase=myPyrebase) 
+        self.pages = [home.build_page(),notification.build_page(),settings.build_page()]
+        self.current_page = home.build_page()
+        self.on_page_load()
         
     def on_page_load(self):
            # clean_notes()
@@ -58,37 +58,20 @@ class DashBoardView:
             self.myPyrebase.sign_out()
             self.page.go("/login")
              
-    #ef build_page(self):
-    #   def open_pagelet_end_drawer(e):
-    #       pagelet.drawer.open = True
-    #       pagelet.drawer.update()
-    #   note_field = TextField(label="Enter note here", width=250)
-    #   all_notes = []
-    #   add_note_button = TextButton("Add Note", on_click=self.handle_add)
-    #   logout_button = TextButton("Logout", on_click=self.handle_logout, style=ButtonStyle(colors.RED))
-    #   myPage = Column([
-    #           Row([Text("Dashboard", size=20)], alignment=MainAxisAlignment.CENTER),
-    #           Row([self.username], alignment=MainAxisAlignment.CENTER),
-    #           Column(all_notes, alignment="center"),
-    #           Row([note_field], alignment=MainAxisAlignment.CENTER),
-    #           Row([add_note_button], alignment=MainAxisAlignment.CENTER),
-    #           Row([logout_button], alignment=MainAxisAlignment.CENTER)
-    #           ])
     def on_nav_change(self,e):
         selected_index = self.page.navigation_bar.selected_index
-        self.current_page.content = Container(content=self.pages[selected_index].content)
+        self.current_page.content = Container(content=self.pages[selected_index].content) 
         print(self.current_page.content)
         
         self.page.update() 
           
-    def DashboardView(self):
+    def build_view(self):
         title = "My Dashboard"  
         note_field = TextField(label="Enter note here", width=250)
         all_notes = []
         add_note_button = TextButton("Add Note", on_click=self.handle_add)
         logout_button = TextButton("Logout", on_click=self.handle_logout, style=ButtonStyle(colors.RED))
         myPage = Column(controls=[
-            logout_button,
             self.current_page,
         ])
 

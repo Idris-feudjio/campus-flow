@@ -24,7 +24,7 @@ anounce2 = Anounce(
                   teacher=teacher1.to_json()
                   )
 
-anounces = [anounce1, anounce2,anounce2,anounce2,anounce2,anounce2,anounce2,anounce2,anounce2,anounce2]
+anounces = [anounce1, anounce2]
  
 student1 = Student(id="87669",first_name="Idris",last_name="Feudjio",email="idris@gmail.com",user_name="eva",password="baby",channel=channelGL1.to_json())
 

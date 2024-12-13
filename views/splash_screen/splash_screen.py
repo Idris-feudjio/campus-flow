@@ -1,23 +1,29 @@
 from flet import *
 from share.db.auth import *
+from views.dashboard.dashboard_view import DashBoardView
 
 class SplashScreen:
+    
     def __init__(self,page:Page, myPyrebase:PyrebaseWrapper) -> None:
         self.page=page
         self.myPyrebase=myPyrebase
         self.page.bgcolor=colors.BLUE_200  
+        self.page.navigation_bar = None
         self.on_load()
         
     def on_load(self):  
-        self.page.navigation_bar = None
         if self.myPyrebase.check_token():
-                self.page.go('/dashboard')    
-                print('------GO TO DASHBOARD-----------')
+                self.page.go(DashBoardView.routeName)    
+                self.page.update()
+                print(f'------GO TO {self.page.route.upper()}-----------')
         else:
-                print('------GO TO LOGIN-----------')
                 self.page.go('/login')  
+                print(f'------GO TO {self.page.route.upper()}-----------')
+                self.page.update()
+        self.page.navigation_bar = None
+        self.page.update()
                 
-    def IndexView(self): 
+    def build_view(self): 
         title = "SplashScreen"   
         banner = CircleAvatar(
             radius=100,
