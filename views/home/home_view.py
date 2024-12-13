@@ -21,7 +21,7 @@ class HomeView:
                   on_tap=self.handle_tap, 
               )
          
-        self.on_load
+        self.build_page
     
     def close_anchor(self,e):
         text = f'{e.control.data}'
@@ -36,15 +36,13 @@ class HomeView:
         print (f'handle_tap e.data {e.data}')
         self.anchor.open_view()
         
-    def on_load(self):  
+    def build_page(self):  
         print("------------------HomeView-------------------------") 
         list_v = ListView(expand=1,spacing=10,padding=20,auto_scroll=True,divider_thickness=1)
         search_item = []
-        for anounce in get_anounce_list(): 
-            pass
-            #print(anounce.teacher.to_json())
-            #card = AnounceCard(anounce).on_load()
-            #list_v.controls.append(card)
+        for anounce in get_anounce_list():  
+            card = AnounceCard(anounce).on_load()
+            list_v.controls.append(card)
         
         return Container(
             content=Column(controls=[
@@ -52,21 +50,6 @@ class HomeView:
               IconButton(icons.MENU_ROUNDED,on_click=()),  
               self.anchor,
               IconButton(icons.SEARCH,on_click=lambda _:self.anchor.open_view()), 
-              #opupMenuButton(
-              #         items=[
-              #             PopupMenuItem(text="Cette semaine"),
-              #             PopupMenuItem(),  # divider
-              #             PopupMenuItem(
-              #                 text="La semaine passé",
-              #                 checked=False,
-              #             ),
-              #             PopupMenuItem(),  # divider
-              #             PopupMenuItem(
-              #                 text="Le mois dernier",
-              #                 checked=False,
-              #             ),
-              #         ]
-              #     ),
             ]),
             list_v
             

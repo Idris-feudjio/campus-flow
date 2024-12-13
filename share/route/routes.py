@@ -16,10 +16,10 @@ class Router:
         dasboard = DashBoardView(page=page,myPyrebase=myPyrebase) 
         
         self.routes = {
-            "/": splash.IndexView(),
+            "/": LoginForm(page, myPyrebase), 
+            DashBoardView.routeName: dasboard.build_view(),
             "/login": LoginForm(page, myPyrebase),
             "/register": RegisterView(page, myPyrebase),
-            "/dashboard": dasboard.DashboardView(),
         }
         self.body = Container(content=self.routes['/']["view"])
 

@@ -11,6 +11,7 @@ def main(page: Page):
     page.scroll = ScrollMode.ADAPTIVE
     page.bgcolor=colors.WHITE
     page.theme_mode = ThemeMode.LIGHT
+    
     page.vertical_alignment = MainAxisAlignment.CENTER
     
     page.window_title_bar_hidden = False
@@ -19,13 +20,13 @@ def main(page: Page):
     #page.bgcolor = colors.TRANSPARENT
     #page.window_bgcolor = colors.TRANSPARENT
 
-    #print(teacher1.to_json())
+    #print(teacher1.to_json()) 
     
     myPyrebase = PyrebaseWrapper(page)
     myRouter = Router(page, myPyrebase)
     
     
-    home = DashBoardView(page=page,myPyrebase=myPyrebase).DashboardView()
+    home = DashBoardView(page=page,myPyrebase=myPyrebase)
 
     page.on_route_change = myRouter.route_change
 
